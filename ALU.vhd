@@ -13,7 +13,7 @@ ENTITY ALU IS
 	PORT(
 		op1: IN std_logic_vector(31 DOWNTO 0);
 		op2: IN std_logic_vector(31 DOWNTO 0);
-		ctrl: IN std_logic_vector(9 DOWNTO 0);
+		ctrl: IN std_logic_vector(3 DOWNTO 0);
 		res: OUT std_logic_vector(31 DOWNTO 0);
 		zero: OUT std_logic
 	);
@@ -21,19 +21,25 @@ END ALU;
 
 ARCHITECTURE RTL OF ALU IS
 	SIGNAL res_s: std_logic_vector(31 DOWNTO 0);
+	
+    CONSTANT ALU_ADD:  std_logic_vector(3 DOWNTO 0) := "0000";
+    CONSTANT ALU_SUB:  std_logic_vector(3 DOWNTO 0) := "0001";
+    CONSTANT ALU_AND:  std_logic_vector(3 DOWNTO 0) := "0010";
+    CONSTANT ALU_OR:   std_logic_vector(3 DOWNTO 0) := "0011";
+    CONSTANT ALU_XOR:  std_logic_vector(3 DOWNTO 0) := "0100";
 BEGIN
 CombLogic: PROCESS(op1, op2, ctrl)
 	BEGIN
 		CASE (ctrl) IS
-			WHEN "0000000000" =>
+			WHEN ALU_ADD =>
 				res_s <= std_logic_vector(signed(op1) + signed(op2));
-			WHEN "0000100000" =>
+			WHEN ALU_SUB =>
 				res_s <= std_logic_vector(signed(op1) - signed(op2));
-			WHEN "1000000000" =>
+			WHEN ALU_XOR =>
 				res_s <= op1 XOR op2;
-			WHEN "1100000000" =>
+			WHEN ALU_OR =>
 				res_s <= op1 OR op2;
-			WHEN "1110000000" =>
+			WHEN ALU_AND =>
 				res_s <= op1 AND op2;
 			WHEN OTHERS =>
 				res_s <= (OTHERS => '0');
