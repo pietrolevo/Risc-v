@@ -53,4 +53,6 @@ BEGIN
         
     inmem: InstructionMem
         PORT MAP(ReadAddress => pc_out_s, Instruction => instr);
+        
+    pcimm: AL
 END Struct;
