@@ -1,11 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
 // Engineer: Pietro Alberto Levo
-// File: PC
+// File: PC.v
 // Description: implementation of a simple Program Counter 
 ///////////////////////////////////////////////////////////////////////////
 
 module PC (clk, rst, pc_in, pc_out);
-	input 	clk;
+	input		clk;
 	input		rst;
 	input		[31:0] pc_in;
 	output	reg [31:0] pc_out;
