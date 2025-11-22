@@ -1,0 +1,13 @@
+///////////////////////////////////////////////////////////////////////////
+// Engineer: Pietro Alberto Levo
+// File: adder.v
+// Description: implementation of a simple generic adder
+///////////////////////////////////////////////////////////////////////////
+
+module adder (in0, in1, res);
+	input		[31:0] in0, in1;
+	output	[31:0] res;
+
+	assign res = in0 + in1;
+
+endmodule
