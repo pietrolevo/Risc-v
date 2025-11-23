@@ -4,27 +4,27 @@
 // Description: implementation of the Decode submodule
 ///////////////////////////////////////////////////////////////////////////
 
-module decodeModule(clk, instri, writecmd, wback, data1, data2, immediate);
+module decodeModule(clk, instrIn, writeCmd, wBack, data1, data2, immediate);
 	input		clk;
-	input		writecmd;
-	input		[31:0]instri, wback;
+	input		writeCmd;
+	input		[31:0]instrIn, wBack;
 	output	[31:0]data1, data2, immediate;
 
 	
 	
 	Registers registers_file (
 		.clk (clk),
-		.regwrite (writecmd), 
-		.read1 (instri[19:15]),
-		.read2 (instri[24:20]),
-		.writeReg (instri[11:7]),
-		.writeData (wback),
+		.regWrite (writeCmd), 
+		.read1 (instrIn[19:15]),
+		.read2 (instrIn[24:20]),
+		.writeReg (instrIn[11:7]),
+		.writeData (wBack),
 		.data1 (data1),
 		.data2 (data2)
 	);
 	
 	ImmGen immediate_generator (
-			.instri (instri),
-			.imm (immediate)
-		);
+		.instrIn (instrIn),
+		.imm (immediate)
+	);
 endmodule

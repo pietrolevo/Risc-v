@@ -4,41 +4,43 @@
 // Description: implementation fetch submodule
 ///////////////////////////////////////////////////////////////////////////
 
-module fetchModule (clk, rst, mux1sel, pc_next, instro);	//at the moment only one rst for all
+module fetchModule (clk, rst, mux1Sel, mux1In, pcOut, instrOut);	//at the moment only one rst for all
 	input		clk;
 	input		rst;
-	input 	mux1sel;
-	input		[31:0] pc_next;
-	output	[31:0] instro;
+	input 	mux1Sel;
+	input		[31:0] mux1In;
+	output	[31:0] pcOut, instrOut;
 		
-	wire		[31:0] muxin0;
-	wire		[31:0] mux1o;
-	wire		[31:0] pc_out_s;
+	wire		[31:0] npc_s;
+	wire		[31:0] mux1Out;
+	wire		[31:0] pcOut_s;
 	
 	mux2to1 mux1 (
-		.i0 (muxin0),
-		.i1(pc_next),
-		.sel (mux1sel),
-		.o (mux1o)
+		.i0 (npc_s),
+		.i1 (mux1In),
+		.sel (mux1Sel),
+		.o (mux1Out)
 	);
 	
 	PC program_counter(
 		.clk (clk),
 		.rst (rst),
-		.pc_in (mux1o),
-		.pc_out (pc_out_s)
+		.pcIn (mux1Out),
+		.pcOut (pcOut_s)
 	);
 	
 	PCinc pc_adder (
-		.pc_out (pc_out_s),
-		.pc_new (muxin0)
+		.pcOut (pcOut_s),
+		.pcNew (npc_s)
 	);
 	
 	InstrMem instruction_memory(
 	.clk (clk),
 	.rst (rst),
-	.addri (pc_out_s),
-	.instro (instro)
+	.addrIn (pcOut_s),
+	.instrOut (instrOut)
 	);
+	
+	assign pcOut = pcOut_s;
 	
 endmodule

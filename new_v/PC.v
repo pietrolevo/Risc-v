@@ -4,18 +4,19 @@
 // Description: implementation of a simple Program Counter 
 ///////////////////////////////////////////////////////////////////////////
 
-module PC (clk, rst, pc_in, pc_out);
+module PC (clk, rst, pcIn, pcOut);
 	input		clk;
 	input		rst;
-	input		[31:0] pc_in;
-	output	reg [31:0] pc_out;
+	input		[31:0] pcIn;
+	output	reg [31:0] pcOut;
 
 	always @(posedge clk)
 	begin
 		if (rst) begin
-			pc_out <= 32'b0;
+			pcOut <= 32'b0;
 		end else begin
-			pc_out <= pc_in;
+			pcOut <= pcIn;
 		end
 	end
+	
 endmodule

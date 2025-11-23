@@ -4,11 +4,11 @@
 // Description: implementation of an Instruction Memory
 ///////////////////////////////////////////////////////////////////////////
 
-module InstrMem (clk, rst, addri, instro);
+module InstrMem (clk, rst, addrIn, instrOut);
 	input		clk;
 	input		rst;
-	input		[31:0] addri;
-	output	reg[31:0] instro;
+	input		[31:0] addrIn;
+	output	reg[31:0] instrOut;
 	
 	reg[31:0] mem[0:255];
 	
@@ -19,9 +19,9 @@ module InstrMem (clk, rst, addri, instro);
 	always @(posedge clk)
 	begin
 		if (rst) begin
-			instro <= mem[0];
+			instrOut <= mem[0];
 		end else begin
-			instro <= mem[addri[9:2]];
+			instrOut <= mem[addrIn[9:2]];
 		end
 	end
 endmodule

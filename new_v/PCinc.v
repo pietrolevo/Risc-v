@@ -4,9 +4,10 @@
 // Description: implementation of the PC incrementer (adder of 4) 
 ///////////////////////////////////////////////////////////////////////////
 
-module PCinc (pc_out, pc_new);
-	input		[31:0] pc_out;
-	output	[31:0] pc_new;
+module PCinc (pcOut, pcNew);
+	input		[31:0] pcOut;
+	output	[31:0] pcNew;
 	
-	assign pc_new = pc_out + 4;
+	assign pcNew = pcOut + 4;
+	
 endmodule

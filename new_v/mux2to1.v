@@ -9,12 +9,13 @@ module mux2to1(i0, i1, sel, o);
 	input		[31:0] i0, i1;
 	output	reg [31:0] o;
 	
-	always @(i0, i1)
+	always @(*)
 	begin
 		if (sel) begin
-			o <= i1;
+			o = i1;
 		end else begin
-			o <= i0;
+			o = i0;
 		end
 	end
+	
 endmodule
