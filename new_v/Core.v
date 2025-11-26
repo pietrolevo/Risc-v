@@ -6,13 +6,9 @@
 
 // at the moment there is no control unit so the signal are inputs of the core
 
-module Core (clk, rst, mux1Sel, mux2Sel, mux3Sel,
-	regWrite, memWrite, memRead, aluCtrl, zero);
+module Core (clk, rst);
 	
 	input		clk, rst;
-	input		mux1Sel, mux2Sel, mux3Sel;
-	input		regWrite, memWrite, memRead, aluCtrl;
-	output	zero;
 
 	wire [31:0] instro_s;
 	wire [31:0] d1, d2;
@@ -23,6 +19,15 @@ module Core (clk, rst, mux1Sel, mux2Sel, mux3Sel,
 	wire [31:0] mem_out;
 	wire [31:0] mux1in_s;
 	wire [31:0] pc_out_s;
+	
+	wire mux1Sel;
+	wire [3:0]aluCtrl;
+	wire regWrite, memWrite, memRead;
+	wire branch;
+	wire mux3Sel;
+	wire zero;
+	
+	assign mux3Sel =  branch & zero;
 
 	fetchModule F (
 		.clk (clk), 
@@ -69,6 +74,19 @@ module Core (clk, rst, mux1Sel, mux2Sel, mux3Sel,
 		.i1 (mem_out), 
 		.sel (mux3Sel), 
 		.o (wb)
+	);
+	
+	ControlUnit CU(
+		.clk (clk),
+		.rst (rst),
+		.opcode (instro_s[6:0]),
+		.branch (branch),
+		.memRead (memRead),
+		.memToReg (mux2Sel),
+		.aluCtrl (aluCtrl),
+		.memWrite (memWrite),
+		.aluSrc (mux1Sel),
+		.regWrite (regWrite)
 	);
 				
 endmodule
